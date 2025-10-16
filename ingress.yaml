@@ -2,18 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mon-ingress
-  annotations:
-    # (optionnel) annotations selon ton controller Ingress
 spec:
   rules:
-  - host: 193.52.159.108
-    http:
+  - http:
       paths:
       - path: /
-        pathType: Prefixss
+        pathType: Prefix
         backend:
           service:
-            name: mon-service
+            name: vuepress-service
             port:
               number: 80
 
