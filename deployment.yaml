@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vuepress-app         # nom de ton déploiement, tu peux changer
+  labels:
+    app: vuepress-app
+spec:
+  replicas: 2                # nombre de pods
+  selector:
+    matchLabels:
+      app: vuepress-app
+  template:
+    metadata:
+      labels:
+        app: vuepress-app
+    spec:
+      containers:
+        - name: vuepress-container
+          image: ghcr.io/zefix-c-tout/vuepress-kubernetes
+  # change <TAG_COMMIT> par le tag de ton image
+          ports:
+            - containerPort: 8080   # ou le port que ton app écoute
+      imagePullSecrets:
+        - name: ghcr-secret     # nom du secret pour accéder à GHCR
+
