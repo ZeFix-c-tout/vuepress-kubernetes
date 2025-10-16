@@ -1,0 +1,6 @@
+echo "node_modules/" >> .gitignore
+echo ".env" >> .gitignore
+echo "*.pem" >> .gitignore
+echo "id_rsa" >> .gitignore
+echo "dist/" >> .gitignore
+

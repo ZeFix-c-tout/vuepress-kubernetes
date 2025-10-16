@@ -1,0 +1,33 @@
+stages:
+  - build
+  - docker_build
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+# Étape 1 : build du site VuePress
+build_js:
+  stage: build
+  image: node:18-alpine
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - docs/.vuepress/dist  # adapte selon ton chemin de build VuePress
+
+# Étape 2 : build et push de l'image Docker
+docker_build:
+  stage: docker_build
+  image: docker:20.10.16
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - master
+
