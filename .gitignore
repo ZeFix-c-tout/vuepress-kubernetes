@@ -4,3 +4,4 @@ echo "*.pem" >> .gitignore
 echo "id_rsa" >> .gitignore
 echo "dist/" >> .gitignore
 
+docs/node_modules/
